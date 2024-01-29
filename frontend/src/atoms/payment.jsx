@@ -23,7 +23,7 @@ export const usersAtom = atom({
 
 export const currentAtom = atom({
     key: "currentAtom",
-    default: ""
+    default: {}
 });
 
 export const modalAtom = atom({

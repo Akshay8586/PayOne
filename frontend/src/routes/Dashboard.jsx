@@ -29,7 +29,7 @@ export function Dashboard() {
             const response_2 = await makeAuthenticatedGETRequest(url);
             setUsers(users => users = response_2.user);
         }finally{
-            const current_user = users.filter( user => user.username === "Current User");
+            const current_user = users.filter( user => user.username === currentuser.username);
             if (current_user.length == 1){
                 setCurrentUser(current_user[0]);
             }
@@ -45,9 +45,9 @@ export function Dashboard() {
                 <>
                     <TopBar firstName={currentuser.firstName} lastName={currentuser.lastName}/>
                     <MiddleBar balance = {balance}/>
-                    <div>
+                    <div className="p-4">
                         {users.map(function (user) {
-                            if (user.username != "Current User"){
+                            if (user.username != currentuser.username){
                                 return <User_comp firstName={user.firstName} lastName={user.lastName} userId = {user._id}/>
                             }
                         })}

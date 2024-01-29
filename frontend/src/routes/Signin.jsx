@@ -6,12 +6,13 @@ import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { makeAuthenticatedPOSTRequest } from "../utils/serverHelpers";
 import { RecoilRoot, useRecoilState, useSetRecoilState } from "recoil";
-import { tokenAtom } from "../atoms/payment";
+import { tokenAtom, currentAtom } from "../atoms/payment";
 export function Signin() {
     const [username, setUsername] =useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const settokenAtom = useSetRecoilState(tokenAtom);
+    const setCurrentUser = useSetRecoilState(currentAtom);
 
     const signIn = async() =>{
         const data = {username, password};
@@ -21,6 +22,9 @@ export function Signin() {
             const token = response.token;
             localStorage.setItem('token', token);
             settokenAtom(tokenAtom => tokenAtom = token);
+            setCurrentUser(user => user = {
+              username : username
+            });
             navigate("/dashboard");
         }else{
             alert("Wrong credentials!!!");

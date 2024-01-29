@@ -5,13 +5,14 @@ import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {makeUnauthenticatedPOSTRequest} from '../utils/serverHelpers';
 import { RecoilRoot, useRecoilState , useSetRecoilState} from "recoil";
-import { tokenAtom } from "../atoms/payment";
+import { tokenAtom, currentAtom } from "../atoms/payment";
 export function Signup () {
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [username, setUsername] =useState("");
     const settokenAtom = useSetRecoilState(tokenAtom);
+    const setCurrentUser = useSetRecoilState(currentAtom);
     const navigate = useNavigate();
 
     const signUp = async() => {
@@ -22,6 +23,11 @@ export function Signup () {
             const token = response.token;
             localStorage.setItem('token', token);
             settokenAtom(tokenAtom => tokenAtom = token);
+            setCurrentUser(user => user = {
+              firstName : firstName,
+              lastName : lastName,
+              username : username
+            });
             navigate("/dashboard");
         }else{
             alert("Failure");
