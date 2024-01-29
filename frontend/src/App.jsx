@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {BrowserRouter, Routes, Route, useNavigate, Navigate} from "react-router-dom";
 import {useState} from "react";
 import { Signup } from "./routes/Signup";
