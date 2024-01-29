@@ -1,4 +1,4 @@
-const backendUrl="http://localhost:8000";
+const backendUrl="http://localhost:3000";
 
 export const makeUnauthenticatedPOSTRequest = async (route, body) => {
     const response = await fetch(backendUrl+route, {
