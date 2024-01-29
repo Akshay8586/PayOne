@@ -1,25 +1,31 @@
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-} from "react-router-dom";
-import { Signup } from "./pages/Signup";
-import { Signin } from "./pages/Signin";
-import { Dashboard } from "./pages/Dashboard";
-import { SendMoney } from "./pages/SendMoney";
+import {BrowserRouter, Routes, Route, useNavigate, Navigate} from "react-router-dom";
+import {useState} from "react";
+import { Signup } from "./routes/Signup";
+import {Signin} from "./routes/Signin";
+import {Dashboard} from "./routes/Dashboard";
+import {RecoilRoot, useRecoilValue} from "recoil";
+import {tokenAtom} from "./atoms/payment";
 
 function App() {
+  const token = useRecoilValue(tokenAtom);
+
   return (
-    <>
-       <BrowserRouter>
-        <Routes>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/send" element={<SendMoney />} />
-        </Routes>
+    <div className="w-screen h-screen">
+      <BrowserRouter>
+        {localStorage.getItem('token') ? (
+          <Routes>
+              <Route path="/dashboard" element={<Dashboard/>}/>
+              <Route path="*" element={<Dashboard/>}/>
+          </Routes>
+        ) : (
+          <Routes>
+            <Route path="/signup" element={<Signup/>}/>
+            <Route path="/signin" element={<Signin/>}/>
+            <Route path="*" element={<Signin/>}/>
+          </Routes>
+        )} 
       </BrowserRouter>
-    </>
+  </div>
   )
 }
 
