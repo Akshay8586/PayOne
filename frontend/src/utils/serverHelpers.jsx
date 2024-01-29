@@ -1,4 +1,4 @@
-const backendUrl="http://localhost:3000";
+const backendUrl="https://pay-one-api.vercel.app";
 
 export const makeUnauthenticatedPOSTRequest = async (route, body) => {
     const response = await fetch(backendUrl+route, {
