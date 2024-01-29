@@ -2,6 +2,7 @@ const backendUrl="https://pay-one-api.vercel.app";
 
 export const makeUnauthenticatedPOSTRequest = async (route, body) => {
     const response = await fetch(backendUrl+route, {
+        mode: 'no-cors',
         method : "POST",
         headers: {
             "Content-Type": "application/json",
@@ -16,6 +17,7 @@ export const makeUnauthenticatedPOSTRequest = async (route, body) => {
 export const makeAuthenticatedPOSTRequest = async (route, body) => {
     const token = localStorage.getItem('token');
     const response = await fetch(backendUrl+route, {
+        mode: 'no-cors',
         method : "POST",
         headers : {
             "Content-Type" : "application/json",
@@ -31,6 +33,7 @@ export const makeAuthenticatedPOSTRequest = async (route, body) => {
 export const makeAuthenticatedGETRequest = async (route) => {
     const token = localStorage.getItem('token');
     const response = await fetch(backendUrl+route, {
+        mode: 'no-cors',
         method : "GET",
         headers : {
             "Content-Type" : "application/json",
