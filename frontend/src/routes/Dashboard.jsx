@@ -17,24 +17,22 @@ export function Dashboard() {
     const [loading , setLoading] = useState(true);
     const [currentuser , setCurrentUser] = useRecoilState(currentAtom);
 
-
-
     useEffect(() => {
         const get_info = async () =>{
-        try{
-            const response = await makeAuthenticatedGETRequest("/api/v1/account/balance");
-            const temp_balance = parseFloat(response.balance).toFixed(2);
-            setBalance(balance => balance = temp_balance);
-            const url =(filter ? "/api/v1/user/bulk?filter="+filter : "/api/v1/user/bulk");
-            const response_2 = await makeAuthenticatedGETRequest(url);
-            setUsers(users => users = response_2.user);
-        }finally{
-            const current_user = users.filter( user => user.username === currentuser.username);
-            if (current_user.length == 1){
-                setCurrentUser(current_user[0]);
+            try{
+                const response = await makeAuthenticatedGETRequest("/api/v1/account/balance");
+                const temp_balance = parseFloat(response.balance).toFixed(2);
+                balance!=temp_balance?setBalance(balance => balance = temp_balance):null;
+                const url =(filter ? "/api/v1/user/bulk?filter="+filter : "/api/v1/user/bulk");
+                const response_2 = await makeAuthenticatedGETRequest(url);
+                response_2.user!=users?setUsers(users => users = response_2.user):null;
+            }finally{
+                const current_user = users.filter( user => user.username === currentuser.username);
+                if (current_user.length == 1){
+                    setCurrentUser(current_user[0]);
+                }
+                setLoading(false);
             }
-            setLoading(false);
-        }
         }
         get_info();
     }, [balance, users]);
